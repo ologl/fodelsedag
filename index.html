@@ -1,76 +1,394 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planering: Ullas Födelsedag 2026</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            color: #333;
-        }
-        h1 { color: #2c3e50; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
-        h2 { color: #16a085; margin-top: 30px; }
-        h3 { color: #2980b9; }
-        ul { padding-left: 20px; }
-        li { margin-bottom: 8px; }
-        .todo { background-color: #f9f9f9; border-left: 4px solid #e74c3c; padding: 15px; margin-top: 20px; }
-        .highlight { font-weight: bold; color: #c0392b; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ullas födelsedag & utställning 2026</title>
+<style>
+  :root {
+    --black: #111111;
+    --grey: #666666;
+    --line: #dddddd;
+    --bg: #ffffff;
+    --done-bg: #e6f4ea;
+    --done-border: #2e7d32;
+    --done-text: #1e5e26;
+    --progress-bg: #fff8e1;
+    --progress-border: #b8860b;
+    --progress-text: #8a6500;
+    --tbd-bg: #f2f2f2;
+    --tbd-border: #999999;
+    --tbd-text: #555555;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    line-height: 1.5;
+  }
+
+  header {
+    border-bottom: 3px solid var(--black);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    margin: 0 0 4px;
+  }
+
+  .subtitle {
+    color: var(--grey);
+    font-size: 0.95rem;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0 36px;
+    font-size: 0.85rem;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .badge.done { background: var(--done-bg); border-color: var(--done-border); color: var(--done-text); }
+  .badge.progress { background: var(--progress-bg); border-color: var(--progress-border); color: var(--progress-text); }
+  .badge.tbd { background: var(--tbd-bg); border-color: var(--tbd-border); color: var(--tbd-text); }
+
+  section {
+    margin-bottom: 48px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-bottom: 2px solid var(--black);
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+
+  .section-header h2 {
+    font-size: 1.3rem;
+    margin: 0;
+  }
+
+  .meta {
+    font-size: 0.9rem;
+    color: var(--grey);
+  }
+
+  .meta strong { color: var(--black); }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px 24px;
+    margin-bottom: 20px;
+    font-size: 0.92rem;
+  }
+
+  .info-grid div span.label {
+    display: block;
+    color: var(--grey);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    margin-bottom: 10px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 9px 8px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  th {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--grey);
+    border-bottom: 2px solid var(--black);
+  }
+
+  td.task { font-weight: 600; }
+  td.owner { white-space: nowrap; }
+  td.note { color: var(--grey); font-size: 0.88rem; }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 9px;
+    border-radius: 4px;
+    border: 1px solid;
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .status.done { background: var(--done-bg); border-color: var(--done-border); color: var(--done-text); }
+  .status.progress { background: var(--progress-bg); border-color: var(--progress-border); color: var(--progress-text); }
+  .status.tbd { background: var(--tbd-bg); border-color: var(--tbd-border); color: var(--tbd-text); }
+
+  .guestlist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .guest {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 0.88rem;
+  }
+
+  .subnote {
+    font-size: 0.85rem;
+    color: var(--grey);
+    margin-top: 4px;
+  }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    margin-top: 40px;
+    font-size: 0.8rem;
+    color: var(--grey);
+  }
+
+  @media (max-width: 600px) {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead { display: none; }
+    tr { border-bottom: 2px solid var(--line); padding: 10px 0; }
+    td { border: none; padding: 3px 0; }
+    td.task { font-size: 1rem; }
+    td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--grey);
+      letter-spacing: 0.03em;
+    }
+  }
+</style>
 </head>
 <body>
 
-    <h1>Planering: Ullas Födelsedag 2026</h1>
-    <p><strong>Födelsedag:</strong> Söndag 30 augusti 2026</p>
+<header>
+  <h1>Ullas födelsedag & utställning</h1>
+  <div class="subtitle">Asperö, augusti 2026 — planeringsöversikt</div>
+</header>
 
-    <h2>Kalender & Datum</h2>
-    <ul>
-        <li><strong>Lördag 22 augusti:</strong> Ullas egna jubileumsutställning.
-            <ul>
-                <li><em>Matidé:</em> Bjuda på/ordna löjrom och våfflor.</li>
-            </ul>
-        </li>
-        <li><strong>Lördag 29 augusti:</strong> Middag och släktkalas på ön.</li>
-        <li><strong>Söndag 30 augusti:</strong> Ullas faktiska födelsedag.</li>
-        <li><strong>Helgen efter (5–6 september):</strong> Planerad vistelse/resa som present.</li>
-    </ul>
+<div class="legend">
+  <span class="badge done">✅ Klart</span>
+  <span class="badge progress">🟡 Pågår</span>
+  <span class="badge tbd">⬜ Ej bestämt</span>
+</div>
 
-    <h2>Middagen (Lördag 29 augusti)</h2>
-    <ul>
-        <li><strong>Logistik:</strong> Kalaset är på en ö. Vanlig catering kan bli krångligt med båtfrakt.</li>
-        <li><strong>Spår 1 (Huvudspår):</strong> Kolla med tjejen på Asperö som fixar mat (smidigast lokalt).</li>
-        <li><strong>Spår 2:</strong> Undersök extern catering till ön om spår 1 inte fungerar.</li>
-    </ul>
+<!-- ============ EVENT 1: EXHIBITION ============ -->
+<section>
+  <div class="section-header">
+    <h2>1. Konstutställning</h2>
+    <span class="meta"><strong>Lördag 22 augusti 2026</strong></span>
+  </div>
 
-    <h2>Huvudpresent: Hemsida med Ullas konst</h2>
-    <ul>
-        <li><strong>Olof:</strong> Fixar HTML och server.</li>
-        <li><strong>Jesper:</strong> Fixar bilder på konsten.</li>
-        <li><strong>Karin:</strong> Skriver ett "skuggreportage" från utställningen den 22:e till hemsidan.</li>
-        <li><strong>Julian & Rufus:</strong> Ansvarar för sociala medier (behöver bekräftas).</li>
-    </ul>
+  <div class="info-grid">
+    <div><span class="label">Datum</span>Lördag 22 augusti 2026</div>
+    <div><span class="label">Plats</span>Asperö</div>
+    <div><span class="label">Tid</span><span class="status tbd">⬜ Ej bestämt</span></div>
+    <div><span class="label">RSVP</span><span class="status tbd">⬜ Fråga Lennart</span></div>
+  </div>
 
-    <h2>Övriga Presentidéer</h2>
-    <ul>
-        <li><strong>Smycken:</strong> Ringar och smycken. Åsa är bra på detta visavi Ulla (stäm av läget).</li>
-        <li><strong>Vistelse:</strong> Resa/övernattning på exempelvis Gästis i Varberg helgen efter (runt den 6 september).</li>
-    </ul>
+  <table>
+    <thead>
+      <tr><th>Uppgift</th><th>Ansvarig</th><th>Status</th><th>Anteckning</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="task" data-label="Uppgift">Affisch</td>
+        <td class="owner" data-label="Ansvarig">Jesper (reserv: Olof)</td>
+        <td data-label="Status"><span class="status progress">🟡 Pågår</span></td>
+        <td class="note" data-label="Anteckning">Ska vara klar 2–3 veckor innan, dvs. ca 1–8 augusti</td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Kontaktlista (Ullas vänner/bekanta)</td>
+        <td class="owner" data-label="Ansvarig">Olof & Lennart</td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning">Behövs innan utskick kan ske</td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Utskick av inbjudningar</td>
+        <td class="owner" data-label="Ansvarig">Olof & Lennart</td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning">Via mail eller sms</td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Hänga/ställa i ordning konsten</td>
+        <td class="owner" data-label="Ansvarig">Ulla</td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning">Görs innan gästerna kommer</td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Fika / förtäring</td>
+        <td class="owner" data-label="Ansvarig">Lennart (ev. med Olof)</td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning">Inköp</td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Värdar / mottagning av gäster</td>
+        <td class="owner" data-label="Ansvarig">Olof, Åse & Lennart</td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning">Pratar om konsten med gästerna</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
 
-    <div class="todo">
-        <h2>Att göra / Följa upp</h2>
-        <ul>
-            <li>[ ] Stäm av idén om skuggreportaget med Karin.</li>
-            <li>[ ] Bekräfta ansvaret för sociala medier med Julian och Rufus.</li>
-            <li>[ ] Kontakta tjejen på Asperö angående maten till den 29:e.</li>
-            <li>[ ] Snacka med Åsa om ringar/smycken.</li>
-            <li>[ ] Kolla upp tillgänglighet och priser för Hotell Gästis i Varberg (5–6 sept).</li>
-            <li>[ ] Planera inköp/logistik för löjrom och våfflor till den 22:e.</li>
-        </ul>
-    </div>
+<!-- ============ EVENT 2: DINNER ============ -->
+<section>
+  <div class="section-header">
+    <h2>2. Födelsedagsmiddag</h2>
+    <span class="meta"><strong>Lördag 29 augusti 2026</strong></span>
+  </div>
+
+  <div class="info-grid">
+    <div><span class="label">Datum</span>Lördag 29 augusti 2026</div>
+    <div><span class="label">Plats</span>Asperö <span class="status tbd" style="margin-left:4px;">⬜ samma plats som utställningen?</span></div>
+    <div><span class="label">Tid</span><span class="status tbd">⬜ Ej bestämt</span></div>
+  </div>
+
+  <h3 style="font-size:1rem; margin-bottom:6px;">Gäster</h3>
+  <div class="guestlist">
+    <span class="guest">Åse</span>
+    <span class="guest">Jesper</span>
+    <span class="guest">Ulla</span>
+    <span class="guest">Lennart</span>
+    <span class="guest">Julian</span>
+    <span class="guest">Rufus</span>
+    <span class="guest">Olof</span>
+    <span class="guest">Karin</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Uppgift</th><th>Ansvarig</th><th>Status</th><th>Anteckning</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="task" data-label="Uppgift">Catering</td>
+        <td class="owner" data-label="Ansvarig"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td data-label="Status"><span class="status progress">🟡 Pågår</span></td>
+        <td class="note" data-label="Anteckning">
+          Undersöker lokal cateraren på Asperö. Lennart har nämnt en kock vid namn "Anna" — bor på Asperö, driver ev. verksamhet från Göteborg. Namnet är osäkert (hörts som Ångström / Ångstam / Angnsman). Ingen träff via sökning. Nästa steg: be Lennart om direkta kontaktuppgifter.
+        </td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Tårta / kaka</td>
+        <td class="owner" data-label="Ansvarig"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning"></td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Dekorationer</td>
+        <td class="owner" data-label="Ansvarig"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning"></td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Dryck</td>
+        <td class="owner" data-label="Ansvarig"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning"></td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Present</td>
+        <td class="owner" data-label="Ansvarig"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning">Gemensam present eller var och en tar med?</td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Tal / skål</td>
+        <td class="owner" data-label="Ansvarig"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning"></td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Specialkost</td>
+        <td class="owner" data-label="Ansvarig"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td data-label="Status"><span class="status tbd">⬜ Ej bestämt</span></td>
+        <td class="note" data-label="Anteckning">Kolla allergier/önskemål hos gästerna</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ PROJECT 3: WEBSITE ============ -->
+<section>
+  <div class="section-header">
+    <h2>3. Hemsida — Ullas konst</h2>
+    <span class="meta">Löpande projekt</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Uppgift</th><th>Ansvarig</th><th>Status</th><th>Anteckning</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="task" data-label="Uppgift">Fotografering av konsten</td>
+        <td class="owner" data-label="Ansvarig">Jesper</td>
+        <td data-label="Status"><span class="status done">✅ Klart</span></td>
+        <td class="note" data-label="Anteckning">Bilder tagna</td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Bygga hemsidan + domän</td>
+        <td class="owner" data-label="Ansvarig">Olof</td>
+        <td data-label="Status"><span class="status progress">🟡 Pågår</span></td>
+        <td class="note" data-label="Anteckning"></td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Överföring av bilder</td>
+        <td class="owner" data-label="Ansvarig">Jesper → Olof</td>
+        <td data-label="Status"><span class="status done">✅ Löst</span></td>
+        <td class="note" data-label="Anteckning">Jesper laddar upp till valfri egen molntjänst, Olof laddar ner därifrån</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  Senast uppdaterad: 16 juli 2026
+</footer>
 
 </body>
 </html>
