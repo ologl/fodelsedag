@@ -178,6 +178,12 @@
     font-size: 0.88rem;
   }
 
+  .guest.maybe {
+    border-style: dashed;
+    color: var(--grey);
+    font-style: italic;
+  }
+
   .subnote {
     font-size: 0.85rem;
     color: var(--grey);
@@ -214,7 +220,7 @@
 <header>
   <h1>Ullas födelsedag & utställning</h1>
   <div class="subtitle">Asperö, augusti 2026 — planeringsöversikt</div>
-  <div class="update-note">🗓 Senast uppdaterad: 27 juli 2026 — info verifierad efter samtal med Karin, Åse & Jesper (samt tidigare lunch med Olof & Lennart)</div>
+  <div class="update-note">🗓 Senast uppdaterad: 11 augusti 2026 — info verifierad efter samtal med Åse & Lennart</div>
 </header>
 
 <div class="legend">
@@ -292,7 +298,8 @@
   <div class="info-grid">
     <div><span class="label">Datum</span>Lördag 29 augusti 2026</div>
     <div><span class="label">Plats</span>Asperö</div>
-    <div><span class="label">Tid</span><span class="status tbd">⬜ Ej bestämt</span></div>
+    <div><span class="label">Tid</span><span class="status done">✅ Bubbel/drink & snacks 15:00, middag 17:30</span></div>
+    <div><span class="label">Huvudansvarig</span><span class="status done">✅ Åse</span></div>
   </div>
 
   <h3 style="font-size:1rem; margin-bottom:6px;">Gäster</h3>
@@ -305,9 +312,10 @@
     <span class="guest">Rufus</span>
     <span class="guest">Olof</span>
     <span class="guest">Karin</span>
-    <span class="guest">Sara</span>
-    <span class="guest">Andreas</span>
+    <span class="guest maybe">Sara (troligen ej)</span>
+    <span class="guest maybe">Andreas (troligen ej)</span>
   </div>
+  <div class="subnote">Mat köps in för ca 10 personer, oavsett — Sara och Andreas kommer troligen inte kunna delta.</div>
 
   <table>
     <thead>
@@ -316,11 +324,17 @@
     <tbody>
       <tr>
         <td class="task" data-label="Uppgift">Catering</td>
+        <td class="owner" data-label="Ansvarig">Anna Ångsman</td>
+        <td data-label="Status"><span class="status done">✅ Bekräftad</span></td>
+        <td class="note" data-label="Anteckning">
+          Anna Ångsman bekräftad — fixar maten/cateringen till middagen.
+        </td>
+      </tr>
+      <tr>
+        <td class="task" data-label="Uppgift">Kostnad (catering)</td>
         <td class="owner" data-label="Ansvarig"><span class="status tbd">⬜ Ej bestämt</span></td>
         <td data-label="Status"><span class="status progress">🟡 Pågår</span></td>
-        <td class="note" data-label="Anteckning">
-          Undersöker lokal cateraren på Asperö. Lennart har nämnt en kock vid namn "Anna" — bor på Asperö, driver ev. verksamhet från Göteborg. Namnet är osäkert (hörts som Ångström / Ångstam / Angnsman). Lennart ringer Anna direkt. Om hon inte catrar eller inte kan den 29 augusti behöver en ny lösning hittas.
-        </td>
+        <td class="note" data-label="Anteckning">Oklar — uppskattning ca 400–500 kr/person. Väntar besked från Anna.</td>
       </tr>
       <tr>
         <td class="task" data-label="Uppgift">Tårta / kaka</td>
@@ -385,7 +399,7 @@
 </section>
 
 <footer>
-  Senast uppdaterad: 27 juli 2026 (samtal med Karin, Åse & Jesper; tidigare lunch med Olof & Lennart)
+  Senast uppdaterad: 11 augusti 2026 (samtal med Åse & Lennart)
 </footer>
 
 </body>
