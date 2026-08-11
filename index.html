@@ -114,6 +114,10 @@
     font-size: 0.92rem;
   }
 
+  .info-grid > div {
+    min-width: 0;
+  }
+
   .info-grid div span.label {
     display: block;
     color: var(--grey);
@@ -157,7 +161,9 @@
     border: 1px solid;
     font-size: 0.82rem;
     font-weight: 600;
-    white-space: nowrap;
+    white-space: normal;
+    line-height: 1.3;
+    max-width: 100%;
   }
 
   .status.done { background: var(--done-bg); border-color: var(--done-border); color: var(--done-text); }
